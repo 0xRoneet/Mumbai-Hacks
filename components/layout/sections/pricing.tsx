@@ -45,7 +45,7 @@ const plans: PlanProps[] = [
     price: 45,
     description:
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Get starterd",
+    buttonText: "Get started",
     benefitList: [
       "4 team member",
       "8 GB storage",
@@ -60,7 +60,7 @@ const plans: PlanProps[] = [
     price: 120,
     description:
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Contact US",
+    buttonText: "Contact Us",
     benefitList: [
       "10 team member",
       "20 GB storage",
@@ -74,12 +74,10 @@ const plans: PlanProps[] = [
 export const PricingSection = () => {
   return (
     <section className="container py-24 sm:py-32">
-      <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
-        Pricing
-      </h2>
+      
 
       <h2 className="text-3xl md:text-4xl text-center font-bold mb-4">
-        Get unlimitted access
+        Get unlimited access
       </h2>
 
       <h3 className="md:w-1/2 mx-auto text-xl text-center text-muted-foreground pb-14">
@@ -92,9 +90,9 @@ export const PricingSection = () => {
             <Card
               key={title}
               className={
-                popular === PopularPlan?.YES
-                  ? "drop-shadow-xl shadow-black/10 dark:shadow-white/10 border-[1.5px] border-primary lg:scale-[1.1]"
-                  : ""
+                popular === PopularPlan.YES
+                  ? "drop-shadow-xl shadow-black/10 dark:shadow-white/10 border-[1.5px] border-purple-600 lg:scale-[1.1]"
+                  : "border border-gray-200 dark:border-gray-700"
               }
             >
               <CardHeader>
@@ -105,7 +103,7 @@ export const PricingSection = () => {
                 </CardDescription>
 
                 <div>
-                  <span className="text-3xl font-bold">${price}</span>
+                  <span className="text-3xl font-bold text-gray-800 dark:text-white">${price}</span>
                   <span className="text-muted-foreground"> /month</span>
                 </div>
               </CardHeader>
@@ -114,8 +112,14 @@ export const PricingSection = () => {
                 <div className="space-y-4">
                   {benefitList.map((benefit) => (
                     <span key={benefit} className="flex">
-                      <Check className="text-primary mr-2" />
-                      <h3>{benefit}</h3>
+                      <Check
+                        className={
+                          popular === PopularPlan.YES
+                            ? "text-purple-600 mr-2"
+                            : "text-purple-300 mr-2"
+                        }
+                      />
+                      <h3 className="text-gray-800 dark:text-gray-200">{benefit}</h3>
                     </span>
                   ))}
                 </div>
@@ -123,10 +127,12 @@ export const PricingSection = () => {
 
               <CardFooter>
                 <Button
-                  variant={
-                    popular === PopularPlan?.YES ? "default" : "secondary"
+                  variant="default"
+                  className={
+                    popular === PopularPlan.YES
+                      ? "w-full bg-purple-600 text-white hover:bg-purple-700"
+                      : "w-full bg-purple-300 text-gray-800 hover:bg-purple-400"
                   }
-                  className="w-full"
                 >
                   {buttonText}
                 </Button>

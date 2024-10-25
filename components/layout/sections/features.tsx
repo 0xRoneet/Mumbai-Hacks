@@ -91,6 +91,7 @@ export const FeaturesSection = () => {
                   <Icon
                     name={icon as keyof typeof icons}
                     size={24}
+                    color="white"
                     className="text-white"
                   />
                 </div>
