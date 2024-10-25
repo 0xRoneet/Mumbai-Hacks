@@ -1,6 +1,9 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { icons } from "lucide-react";
+import { useTheme } from "next-themes";
 
 interface FeaturesProps {
   icon: string;
@@ -48,40 +51,53 @@ const featureList: FeaturesProps[] = [
 ];
 
 export const FeaturesSection = () => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
+
+  // Color styles based on theme
+  const bgGradient = isDarkMode
+    ? "bg-gradient-to-br from-gray-900 to-gray-800"
+    : "bg-gradient-to-br from-primary-100 to-primary-200";
+  const textColor = isDarkMode ? "text-white" : "text-gray-800";
+  const backgroundColor = isDarkMode ? "bg-gray-900" : "bg-white";
+  const subtextColor = isDarkMode ? "text-gray-400" : "text-gray-600";
+  const cardBg = isDarkMode ? "bg-gray-800" : "bg-white bg-opacity-80";
+  const borderColor = isDarkMode ? "border-gray-700" : "border-gray-300";
+  const iconColor = isDarkMode ? "bg-purple-600 text-white" : "bg-purple-300 text-gray-800";
+  const titleColor = isDarkMode ? "text-purple-400" : "text-purple-800";
+
   return (
-    <section id="features" className="container py-24 sm:py-32">
-      <h2 className="text-lg text-primary text-center mb-2 tracking-wider">
+    <section className={`relative min-h-screen ${backgroundColor} w-full -mt-8 overflow-hidden`}>
+      <h2 className="text-lg text-purple-500 text-center mb-2 tracking-wider">
         Features
       </h2>
 
-      <h2 className="text-3xl md:text-4xl text-center font-bold mb-4">
+      <h2 className={`text-3xl md:text-4xl text-center font-bold mb-4 ${textColor}`}>
         What Makes Us Different
       </h2>
 
-      <h3 className="md:w-1/2 mx-auto text-xl text-center text-muted-foreground mb-8">
+      <h3 className={`md:w-1/2 mx-auto text-xl text-center mb-8 ${subtextColor}`}>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
         fugiat, odit similique quasi sint reiciendis quidem iure veritatis optio
         facere tenetur.
       </h3>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {featureList.map(({ icon, title, description }) => (
           <div key={title}>
-            <Card className="h-full bg-background border-0 shadow-none">
-              <CardHeader className="flex justify-center items-center">
-                <div className="bg-primary/20 p-2 rounded-full ring-8 ring-primary/10 mb-4">
+            <Card className={`h-full ${cardBg} ${borderColor} shadow-lg`}>
+              <CardHeader className="flex flex-col items-center">
+                <div className={`p-2 rounded-full ring-8 ring-purple-200 mb-4 ${iconColor}`}>
                   <Icon
                     name={icon as keyof typeof icons}
                     size={24}
-                    color="hsl(var(--primary))"
-                    className="text-primary"
+                    className="text-white"
                   />
                 </div>
-
-                <CardTitle>{title}</CardTitle>
+                <CardTitle className={`${titleColor}`}>{title}</CardTitle>
               </CardHeader>
 
-              <CardContent className="text-muted-foreground text-center">
+              <CardContent className={`text-center ${subtextColor}`}>
                 {description}
               </CardContent>
             </Card>
