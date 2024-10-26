@@ -1,12 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatedTooltip } from "@/components/ui/animated-tooltip"; 
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 const people = [
   {
@@ -53,8 +54,11 @@ const people = [
   },
 ];
 
+
+
 export const HeroSection = () => {
   const { theme } = useTheme();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Define color classes based on the theme (light or dark)
   const isDarkMode = theme === "dark";
@@ -64,10 +68,14 @@ export const HeroSection = () => {
   const buttonPrimaryColor = isDarkMode ? "bg-purple-700 hover:bg-purple-800" : "bg-purple-600 hover:bg-purple-700";
   const buttonSecondaryColor = isDarkMode ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300";
 
+  const handleGetStartedClick = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <section className={`relative min-h-screen ${backgroundColor} w-full -mt-8 overflow-hidden`}>
-  <div className="grid place-items-center lg:max-w-screen-xl gap-8 mx-auto py-16 md:py-20 relative z-10">
-     
+      <div className="grid place-items-center lg:max-w-screen-xl gap-8 mx-auto py-16 md:py-20 relative z-10">
+        
         {/* Header Text and Badge */}
         <div className="text-center space-y-8">
           <Badge variant="outline" className={`text-sm py-2 ${secondaryTextColor}`}>
@@ -97,8 +105,8 @@ export const HeroSection = () => {
 
           {/* Buttons */}
           <div className="space-y-4 md:space-y-0 md:space-x-4">
-            <Button className={`w-5/6 md:w-1/4 rounded-full font-bold group/arrow ${buttonPrimaryColor} text-white`}>
-              Get Started
+            <Button onClick={handleGetStartedClick} className={`w-5/6 md:w-1/4 rounded-full font-bold group/arrow ${buttonPrimaryColor} text-white`}>
+              Generate Presentation
               <ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform" />
             </Button>
 
@@ -108,16 +116,16 @@ export const HeroSection = () => {
               className={`w-5/6 md:w-1/4 rounded-full font-bold ${buttonSecondaryColor}`}
             >
               <Link
-                href="https://github.com/nobruf/shadcn-landing-page.git"
+                href="http://localhost:3000/"
                 target="_blank"
               >
-                Github repository
+                Startup Advisor
               </Link>
             </Button>
           </div>
 
-          {/* Animated Tooltip */}
-          <div className="py-6 flex justify-center">  {/* Adjust the padding here if needed */}
+                   {/* Animated Tooltip */}
+                   <div className="py-6 flex justify-center">  {/* Adjust the padding here if needed */}
   <AnimatedTooltip items={people} />
 </div>
         </div>
@@ -132,14 +140,34 @@ export const HeroSection = () => {
             className="w-full md:w-[1200px] mx-auto rounded-lg relative leading-none flex items-center border border-t-2 border-secondary border-t-purple-400/30"
             src={
               theme === "light"
-                ? "/hero-image-light.jpeg"
-                : "/hero-image-dark.jpeg"
+                ? "/hero-image-light.png"
+                : "/hero-image-dark.png"
             }
             alt="dashboard"
           />
 
           <div className="absolute bottom-0 left-0 w-full h-20 md:h-28 bg-gradient-to-b from-background/0 via-background/50 to-background rounded-lg"></div>
         </div>
+
+        {/* Modal Component */}
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="relative bg-white dark:bg-gray-900 w-4/5 md:w-3/5 lg:w-1/2 p-8 rounded-lg shadow-lg">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100"
+              >
+                &times;
+              </button>
+              
+              <iframe
+                src="https://app.presentations.ai/"
+                className="w-full h-[400px] rounded-lg"
+                title="Get Started"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
